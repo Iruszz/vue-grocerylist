@@ -16,8 +16,9 @@ import { ref, computed } from 'vue';
     });
   });
 
-    const TotalCosts = computed(() => {
-      return productTotalCosts;
+  const TotalCosts = computed(() => {
+    return productTotalCosts.value.reduce(
+      (acc, item) => acc + item, 0);
   });
 
 </script>
@@ -44,10 +45,10 @@ import { ref, computed } from 'vue';
                 <td><input class="productQuantities" type="number" min="0" v-model.number="productQuantities[index]"></td> 
                 <td class="productTotalCosts">{{ productTotalCosts[index].toFixed(2) }}</td>
             </tr>
-            <tfoot>
+            <tr>
                 <td colspan="3"><strong>Totaal</strong></td>
-                <td id="totalCost"><strong>0.00</strong></td>
-            </tfoot>
+                <td id="totalCost"><strong>{{ TotalCosts.toFixed(2) }}</strong></td>
+            </tr>
         </tbody>
     </table>
 </body>
