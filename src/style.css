@@ -1,12 +1,7 @@
-* {
-    font-family: sans-serif;
-}
+@import "tailwindcss";
 
-table {
-    border-collapse: collapse;
-    width:70%; 
-    margin-top:25px; 
-    margin-bottom:25px;
+* {
+    font-family: InterVariable, sans-serif;
 }
 
 tr {
@@ -16,8 +11,13 @@ tr {
 td {
     border: solid 1px #888;
     padding: 10px;
+    min-width: 250px;
 }
 
 tr .bedrag {
     text-align: right;
+}
+
+input {
+    width: 100px;
 }

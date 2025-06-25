@@ -1,15 +1,15 @@
 <script setup>
 import {ref, computed} from 'vue';
 
-const {products} = defineProps({
-    products: Object,
+const {groceries} = defineProps({
+    groceries: Array,
 });
 
 const productQuantities = ref([0, 0, 0, 0]);
 
 const productTotalCosts = computed(() => {
-    return products.map((product, i) => {
-        return product[1] * productQuantities.value[i];
+    return groceries.map((product, i) => {
+        return product.price * productQuantities.value[i];
     });
 });
 
@@ -26,7 +26,7 @@ const TotalCosts = computed(() => {
         <title>Grocery list</title>
     </head>
     <body>
-        <table id="groceryList">
+        <table id="groceryList" class="w-fit m-25 border-collapse">
             <tbody>
                 <tr>
                     <td><strong>Product</strong></td>
@@ -34,9 +34,9 @@ const TotalCosts = computed(() => {
                     <td><strong>Aantal</strong></td>
                     <td><strong>Subtotaal</strong></td>
                 </tr>
-                <tr v-for="(product, index) in products" :key="product[0]">
-                    <td>{{ product[0] }}</td>
-                    <td class="productPrices">{{ product[1] }}</td>
+                <tr v-for="(product, index) in groceries" :key="product.id">
+                    <td>{{ product.name }}</td>
+                    <td class="productPrices">{{ product.price }}</td>
                     <td>
                         <input
                             class="productQuantities"

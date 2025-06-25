@@ -1,3 +1,7 @@
-<script setup></script>
+<script setup>
+import GroceryForm from './../components/GroceryForm.vue';
+</script>
 
-<template></template>
+<template>
+    <GroceryForm />
+</template>
