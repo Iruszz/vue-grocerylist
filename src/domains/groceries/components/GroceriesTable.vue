@@ -1,11 +1,19 @@
 <script setup>
-import {ref, computed} from 'vue';
+import {ref, computed, watch} from 'vue';
 
 const {groceries} = defineProps({
     groceries: Array,
 });
 
-const productQuantities = ref([0, 0, 0, 0]);
+const productQuantities = ref([]);
+
+watch(
+    () => groceries,
+    newGroceries => {
+        productQuantities.value = newGroceries.map((g, i) => productQuantities.value[i] ?? 0);
+    },
+    {immediate: true},
+);
 
 const productTotalCosts = computed(() => {
     return groceries.map((product, i) => {
@@ -33,6 +41,7 @@ const TotalCosts = computed(() => {
                     <td><strong>Prijs</strong></td>
                     <td><strong>Aantal</strong></td>
                     <td><strong>Subtotaal</strong></td>
+                    <td><strong></strong></td>
                 </tr>
                 <tr v-for="(product, index) in groceries" :key="product.id">
                     <td>{{ product.name }}</td>
@@ -46,10 +55,15 @@ const TotalCosts = computed(() => {
                         />
                     </td>
                     <td class="productTotalCosts">{{ productTotalCosts[index].toFixed(2) }}</td>
+                    <td>
+                        <router-link :to="`/edit/${product.id}`" class="text-indigo-600 hover:underline">
+                            Edit
+                        </router-link>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3"><strong>Totaal</strong></td>
-                    <td id="totalCost">
+                    <td id="totalCost" colspan="2">
                         <strong>{{ TotalCosts.toFixed(2) }}</strong>
                     </td>
                 </tr>
