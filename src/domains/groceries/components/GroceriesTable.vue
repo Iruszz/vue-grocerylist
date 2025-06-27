@@ -1,5 +1,6 @@
 <script setup>
 import {ref, computed, watch} from 'vue';
+import {removeGrocery} from '../store.js';
 
 const {groceries} = defineProps({
     groceries: Array,
@@ -10,20 +11,22 @@ const productQuantities = ref([]);
 watch(
     () => groceries,
     newGroceries => {
-        productQuantities.value = newGroceries.map((g, i) => productQuantities.value[i] ?? 0);
+        productQuantities.value = newGroceries.map((g, i) => productQuantities.value[i] ?? g.amount ?? 0);
     },
     {immediate: true},
 );
 
 const productTotalCosts = computed(() => {
-    return groceries.map((product, i) => {
-        return product.price * productQuantities.value[i];
-    });
+    return groceries.map(product => product.price * product.amount);
 });
 
 const TotalCosts = computed(() => {
     return productTotalCosts.value.reduce((acc, item) => acc + item, 0);
 });
+
+function removeItem(id) {
+    removeGrocery(id);
+}
 </script>
 
 <template>
@@ -47,18 +50,16 @@ const TotalCosts = computed(() => {
                     <td>{{ product.name }}</td>
                     <td class="productPrices">{{ product.price }}</td>
                     <td>
-                        <input
-                            class="productQuantities"
-                            type="number"
-                            min="0"
-                            v-model.number="productQuantities[index]"
-                        />
+                        <input class="productQuantities" type="number" min="0" v-model.number="product.amount" />
                     </td>
                     <td class="productTotalCosts">{{ productTotalCosts[index].toFixed(2) }}</td>
-                    <td>
+                    <td class="space-x-5">
                         <router-link :to="`/edit/${product.id}`" class="text-indigo-600 hover:underline">
                             Edit
                         </router-link>
+                        <button @click="removeItem(product.id)" class="text-indigo-600 hover:underline cursor-pointer">
+                            Delete
+                        </button>
                     </td>
                 </tr>
                 <tr>

@@ -4,13 +4,13 @@ import {addGrocery} from '../store.js';
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 
+const router = useRouter();
+
 const grocery = ref({
     name: '',
     price: 0,
     amount: 1,
 });
-
-const router = useRouter();
 
 function saveGrocery(updatedGrocery) {
     addGrocery(updatedGrocery);
