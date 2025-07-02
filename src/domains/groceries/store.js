@@ -1,7 +1,7 @@
 // State
 import {ref, computed} from 'vue';
 
-let groceries = ref([
+const groceries = ref([
     {id: 1, name: 'Brood', price: 1.99, amount: 0},
     {id: 2, name: 'Broccoli', price: 0.99, amount: 0},
     {id: 3, name: 'Krentebollen', price: 2.34, amount: 0},
@@ -21,7 +21,7 @@ export const addGrocery = grocery => {
 export function updateGrocery(updatedGrocery) {
     const index = groceries.value.findIndex(g => g.id === updatedGrocery.id);
     if (index !== -1) {
-        groceries.value[index] = {...updatedGrocery};
+        groceries.value[index] = updatedGrocery;
     }
 }
 

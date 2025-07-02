@@ -1,6 +1,5 @@
 <script setup>
 import GroceryForm from './../components/GroceryForm.vue';
-import {ref} from 'vue';
 import {getGroceryById, updateGrocery} from '../store.js';
 import {useRoute, useRouter} from 'vue-router';
 
@@ -9,7 +8,7 @@ const router = useRouter();
 
 const id = Number(route.params.id);
 
-const grocery = ref({...getGroceryById(id).value});
+const grocery = getGroceryById(id);
 
 function saveGrocery(updatedGrocery) {
     updateGrocery(updatedGrocery);

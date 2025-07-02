@@ -1,11 +1,10 @@
 <script setup>
-import {ref, watch} from 'vue';
+import {ref} from 'vue';
 
 const props = defineProps({
     grocery: {
         type: Object,
         required: true,
-        default: () => ({name: '', price: 0, amount: 1}),
     },
 });
 
@@ -13,16 +12,9 @@ const emit = defineEmits(['submit']);
 
 const localGrocery = ref({...props.grocery});
 
-watch(
-    () => props.grocery,
-    newGrocery => {
-        localGrocery.value = {...newGrocery};
-    },
-);
-
 function onSubmit(event) {
     event.preventDefault();
-    emit('submit', {...localGrocery.value});
+    emit('submit', localGrocery.value);
 }
 </script>
 
